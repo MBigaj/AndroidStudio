@@ -1,14 +1,10 @@
 package com.example.testingandroidstudio
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Switch
 import android.widget.TextView
-import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.navigation.findNavController
-import androidx.navigation.ui.AppBarConfiguration
-import androidx.navigation.ui.navigateUp
-import androidx.navigation.ui.setupActionBarWithNavController
-import com.example.testingandroidstudio.databinding.ActivityPrintResponseBinding
 
 class PrintResponse : AppCompatActivity() {
     companion object {
@@ -20,13 +16,23 @@ class PrintResponse : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_print_response)
 
-        val message_view = findViewById<TextView>(R.id.regular_message)
-        val ciphered_message_view = findViewById<TextView>(R.id.ciphered_message_print)
+        val message_view: TextView = findViewById(R.id.regular_message)
+        val ciphered_message_view: TextView = findViewById(R.id.ciphered_message_print)
+        val message_switch: Switch = findViewById(R.id.message_switch)
 
         val message = intent.getStringExtra(MESSAGE)
         val ciphered_message = intent.getStringExtra(CIPHERED_MESSAGE)
 
         message_view.text = message
         ciphered_message_view.text = ciphered_message
+
+        message_switch.setOnClickListener() {
+            var switch_state: Boolean = message_switch.isChecked
+
+            if (switch_state)
+                message_view.visibility = View.INVISIBLE
+            else
+                message_view.visibility = View.VISIBLE
+        }
     }
 }

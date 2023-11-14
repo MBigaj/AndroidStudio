@@ -12,7 +12,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val display_holiday: TextView = findViewById(R.id.cipher_display)
         val name_input: TextView = findViewById(R.id.text_input)
         val cipher_list: Spinner = findViewById(R.id.cipher_types_list)
 
