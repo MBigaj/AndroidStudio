@@ -3,8 +3,8 @@
 
     <string-array name="cipher_type_list">
         <item>Ceasar Cipher</item>
-        <item>Cipher 2</item>
-        <item>Cipher 3</item>
+        <item>Ascii Cipher</item>
+        <item>Hash</item>
     </string-array>
     <string name="title_activity_print_response">PrintResponse</string>
     <!-- Strings used for fragments for navigation -->

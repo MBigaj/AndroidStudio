@@ -7,8 +7,8 @@ class Cipher()
 
     val cipher_resolver = mapOf(
         "Ceasar Cipher" to { this.caesar_cipher() },
-        "Cipher 2" to { this.cipher2() },
-        "Cipher 3" to { this.cipher3() }
+        "Ascii Cipher" to { this.ascii_cipher() },
+        "Hash" to { this.hash() }
     )
 
     fun set_message(message: CharSequence)
@@ -43,13 +43,24 @@ class Cipher()
         this.ciphered_message = cipher
     }
 
-    fun cipher2()
+    fun ascii_cipher()
     {
+        var cipher: String = ""
 
+        for (character in this.message)
+        {
+            cipher += character.code.toString() + " "
+        }
+
+        this.ciphered_message = cipher
     }
 
-    fun cipher3()
+    fun hash()
     {
+        var cipher: String = ""
 
+        cipher = this.message.hashCode().toString()
+
+        this.ciphered_message = cipher
     }
 }
