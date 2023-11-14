@@ -11,37 +11,44 @@
         android:id="@+id/linearLayout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <TextView
-            android:id="@+id/ciphered_message_print"
-            android:layout_width="242dp"
-            android:layout_height="96dp"
-            app:layout_anchor="@+id/linearLayout"
-            app:layout_anchorGravity="center" />
-
-        <TextView
-            android:id="@+id/regular_message"
-            android:layout_width="242dp"
-            android:layout_height="96dp"
-            android:layout_marginTop="70dp"
-            app:layout_anchor="@+id/linearLayout"
-            app:layout_anchorGravity="top|center" />
-
-        <Switch
-            android:id="@+id/message_switch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_anchor="@+id/linearLayout"
-            app:layout_anchorGravity="end|center" />
+        android:orientation="vertical"
+        app:layout_anchorGravity="center">
 
     </LinearLayout>
 
     <ImageView
+        android:id="@+id/share_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:scaleType="center"
         android:src="@drawable/baseline_share_24"
+        app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="start|center" />
+
+    <Switch
+        android:id="@+id/message_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="end|center" />
+
+    <TextView
+        android:id="@+id/ciphered_message_print"
+        android:layout_marginTop="120dp"
+        android:layout_width="242dp"
+        android:layout_height="96dp"
+        android:textSize="24dp"
+        android:textAlignment="center"
+        app:layout_anchor="@+id/linearLayout"
+        app:layout_anchorGravity="top|center" />
+
+    <TextView
+        android:id="@+id/regular_message"
+        android:layout_width="242dp"
+        android:layout_height="96dp"
+        android:layout_marginTop="70dp"
+        android:textSize="24dp"
+        android:textAlignment="center"
         app:layout_anchor="@+id/linearLayout"
         app:layout_anchorGravity="center" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
