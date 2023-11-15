@@ -57,20 +57,20 @@ class JourneyCustomizer
     {
         this.adventure = "During your adventure to "
 
-        this.adventure += this.randomize_journey()
+        this.adventure += this.get_random_journey()
 
         this.adventure += ", you meet "
 
-        this.adventure += this.randomize_adventurer()
+        this.adventure += this.get_random_adventurer()
     }
 
-    fun randomize_journey(): String?
+    fun get_random_journey(): String?
     {
         val option = Random.nextInt(1, this.dice_size)
         return this.journeys.get(option)
     }
 
-    fun randomize_adventurer(): String?
+    fun get_random_adventurer(): String?
     {
         val option = Random.nextInt(1, this.dice_size)
         return this.adventurers.get(option)
