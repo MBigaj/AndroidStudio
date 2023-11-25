@@ -1,14 +1,19 @@
 package com.example.lab4
 
 import android.app.ActionBar
+import android.app.AlertDialog
+import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
+import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.widget.EditText
 import android.widget.TableLayout
 import android.widget.TableRow
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.material.snackbar.Snackbar
 
 
 class MainActivity : AppCompatActivity() {
@@ -20,68 +25,95 @@ class MainActivity : AppCompatActivity() {
 
         val table_list: TableLayout = findViewById(R.id.table_list)
         val add_item_button: View = findViewById(R.id.add_to_list)
+        val share_button: View = findViewById(R.id.share_button)
 
         add_item_button.setOnClickListener { view ->
-            val new_item = Item("name", shopping_list)
+            this.setup_builder(view, table_list, shopping_list)
+        }
 
-            val new_row = TableRow(this)
-            new_row.id = new_item.id
-            new_row.setBackgroundColor(Color.GRAY)
-            new_row.layoutParams = ActionBar.LayoutParams(
-                ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.WRAP_CONTENT
-            )
+        share_button.setOnClickListener {
+            val intent = Intent(Intent.ACTION_SEND)
 
-            val row = TextView(this)
-            row.text = "HELLO" // set the text
+            val name_list = arrayListOf<String>()
 
-            row.setTextColor(Color.WHITE)
-            row.setPadding(5, 5, 5, 5)
+            for (item in shopping_list.item_list)
+                name_list.add(item.name)
 
-            new_row.addView(row)
+            val message = name_list.joinToString(", ")
 
-            table_list.addView(new_row)
-
-            Snackbar.make(view, "Added new element to shopping list", Snackbar.LENGTH_LONG)
-                .setAction("Action", null)
-                .show()
+            intent.setType("text/plain")
+            intent.putExtra(Intent.EXTRA_TEXT, message)
+            startActivity(Intent.createChooser(intent, "Share using"))
         }
     }
-}
 
-class ShoppingList()
-{
-    var item_list = arrayListOf<Item>()
-
-    fun add_item(item: Item)
+    fun setup_builder(view: View, table_list: TableLayout, shopping_list: ShoppingList)
     {
-        if (get_index(item.name) < 0)
-            return
+        val builder: AlertDialog.Builder = AlertDialog.Builder(this@MainActivity)
 
-        this.item_list.add(item)
+        val inflater: LayoutInflater = layoutInflater
+        val dialogLayout: View = inflater.inflate(R.layout.edit_popup, null)
+        val editText: EditText = dialogLayout.findViewById(R.id.add_item_to_list)
 
-        item.id = this.item_list.size
+        with(builder) {
+            setTitle("Add new Item")
+            setPositiveButton("Add") { dialog, which ->
+                if (shopping_list.get_index(editText.text.toString()) == -1) {
+
+                    val new_item = Item(shopping_list)
+
+                    new_item.set_name(editText.text.toString())
+
+                    setup_new_row(table_list, new_item)
+
+                    Toast.makeText(
+                        this@MainActivity,
+                        "Added ${new_item.name} to shopping list",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    Toast.makeText(
+                        this@MainActivity,
+                        "${editText.text} already exists on list",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
+
+            setNegativeButton("Cancel") { dialog, which ->
+                Log.d("Main", "Negative btn clicked")
+            }
+
+            setView(dialogLayout)
+            show()
+        }
     }
 
-    fun remove_item(item: Item)
+    fun setup_new_row(table_list: TableLayout, new_item: Item)
     {
-        this.item_list.remove(item)
-    }
+        val new_row = TableRow(this)
+        new_row.id = new_item.id
 
-    fun get_index(name: String): Int
-    {
-        for (i in 0..<this.item_list.size)
-            if (this.item_list[i].name == name)
-                return i
-        return -1
-    }
-}
+        new_row.setBackgroundColor(Color.GRAY)
+        new_row.layoutParams = ActionBar.LayoutParams(
+            ActionBar.LayoutParams.MATCH_PARENT,
+            ActionBar.LayoutParams.WRAP_CONTENT
+        )
 
-class Item(val name: String, val shopping_list: ShoppingList)
-{
-    var id: Int = 0
+        val row = TextView(this)
 
-    init {
-        shopping_list.add_item(this)
+        row.text = new_item.name
+
+        row.setTextColor(Color.WHITE)
+        row.setPadding(5, 5, 5, 5)
+
+        new_row.addView(row)
+
+        table_list.addView(new_row)
+
+        new_row.setOnClickListener {
+            new_item.shopping_list.remove_item(new_item)
+            table_list.removeView(new_row)
+        }
     }
 }
