@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">lab5_task1</string>
+    <string name="three_rings">"Three Rings for the Elven-kings under the sky,</string>
+    <string name="seven_rings">Seven for the Dwarf-lords in their halls of stone,</string>
+    <string name="nine_rings">Nine for Mortal Men doomed to die,</string>
+    <string name="final_ring">
+        One for the Dark Lord on his dark throne <br> </br>
+        In the Land of Mordor where the Shadows lie. <br> </br>
+        One Ring to rule them all, One Ring to find them, <br> </br>
+        One Ring to bring them all and in the darkness bind them <br> </br>
+        In the Land of Mordor where the Shadows lie."
+    </string>
+</resources>
